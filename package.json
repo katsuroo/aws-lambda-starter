@@ -1,0 +1,48 @@
+{
+  "name": "AWS-Lambda-Starter",
+  "version": "0.0.1",
+  "author": "katsuroo",
+  "license": "MIT",
+  "main": "server.js",
+  "description": "AWS Lambda microservices starter for Node.js",
+  "engine": "4.3.2",
+  "dependencies": {
+    "aws-serverless-express": "^1.1.3",
+    "bluebird": "^3.4.6",
+    "body-parser": "^1.15.2",
+    "dotenv": "^2.0.0",
+    "express": "^4.14.0",
+    "glob": "^7.1.1",
+    "lodash": "^4.16.4",
+    "pg": "^6.1.0",
+    "sequelize": "^3.24.3"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "claudia": "^2.1.0",
+    "eslint": "^3.8.0",
+    "eslint-config-airbnb-base": "^8.0.0",
+    "eslint-plugin-import": "^2.0.1",
+    "inquirer": "^1.2.2",
+    "mocha": "^3.1.2",
+    "nodemon": "^1.11.0"
+  },
+  "scripts": {
+    "start:dev": "nodemon --config ./config/nodemon.json server.js",
+    "create:handler": "node ./scripts/create.handler",
+    "create:model": "node ./scripts/create.model",
+    "build:env": "node ./scripts/build.environment",
+    "test": "mocha --reporter spec ./src/handlers/**/*.js",
+    "lint": "eslint --config config/.eslintrc src/**/*.js",
+    "deploy": "npm run test && npm run lint && node ./scripts/deploy",
+    "set-version": "node ./scripts/set.version",
+
+    "//": " ####### Following scripts not meant to be called directly ########",
+
+    "lambda:create": "claudia create --handler lambda.init --deploy-proxy-api --region us-east-1",
+    "lambda:update": "claudia update",
+    "lambda:setProd": "claudia set-version --version prod",
+    "lambda:setDev": "claudia set-version --version dev",
+    "lambda:setStage": "claudia set-version --version stage"
+  }
+}

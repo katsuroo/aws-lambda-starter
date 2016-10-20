@@ -1,3 +1,4 @@
+'use strict';
 require('dotenv').config({path: './config/.env'});
 
 const Promise = require('bluebird');

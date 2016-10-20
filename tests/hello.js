@@ -1,18 +1,19 @@
 'use strict';
-var Test = require('tape');
-var Express = require('express');
-var BodyParser = require('body-parser');
-var Swaggerize = require('swaggerize-express');
-var Path = require('path');
-var Request = require('supertest');
-var Mockgen = require('../data/mockgen.js');
-var Parser = require('swagger-parser');
+const Test = require('tape');
+const Express = require('express');
+const BodyParser = require('body-parser');
+const Swaggerize = require('swaggerize-express');
+const Path = require('path');
+const Request = require('supertest');
+const Mockgen = require('../data/mockgen.js');
+const Parser = require('swagger-parser');
 /**
  * Test for /hello
  */
 Test('/hello', function (t) {
-    var apiPath = Path.resolve(__dirname, '../../config/swagger.yaml');
-    var App = Express();
+    const apiPath = Path.resolve(__dirname, '../../config/swagger.yaml');
+    const App = Express();
+    
     App.use(BodyParser.json());
     App.use(BodyParser.urlencoded({
         extended: true
@@ -21,6 +22,7 @@ Test('/hello', function (t) {
         api: apiPath,
         handlers: Path.resolve(__dirname, '../handlers')
     }));
+    
     Parser.validate(apiPath, function (err, api) {
         t.error(err, 'No parse error');
         t.ok(api, 'Valid swagger api');
@@ -35,8 +37,11 @@ Test('/hello', function (t) {
             Mockgen().requests({
                 path: '/hello',
                 operation: 'get'
-            }, function (err, mock) {
-                var request;
+            }, callback)
+            
+            function callback(err, mock) {
+                let request;
+                
                 t.error(err);
                 t.ok(mock);
                 t.ok(mock.request);
@@ -59,6 +64,7 @@ Test('/hello', function (t) {
                         request = request.set(headerName, mock.request.headers[headerName]);
                     });
                 }
+                
                 request.end(function (err, res) {
                     t.error(err, 'No error');
                     t.ok(res.statusCode === 200, 'Ok response status');
@@ -72,7 +78,7 @@ Test('/hello', function (t) {
                     t.error(validate.errors, 'No validation errors');
                     t.end();
                 });
-            });
+            };
         });
     });
 });

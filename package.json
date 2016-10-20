@@ -17,7 +17,7 @@
     "pg": "^6.1.0",
     "sequelize": "^3.24.3",
     "swaggerize-express": "^4.0.0",
-    "swagmock": "~0.0.2"
+    "swagmock": "0.0.5"
   },
   "devDependencies": {
     "chai": "^3.5.0",
@@ -25,7 +25,7 @@
     "eslint": "^3.8.0",
     "eslint-config-airbnb-base": "^8.0.0",
     "eslint-plugin-import": "^2.0.1",
-    "generator-swaggerize": "^3.0.0",
+    "generator-swaggerize": "git+https://github.com/katsuroo/generator-swaggerize",
     "inquirer": "^1.2.2",
     "is-my-json-valid": "^2.13.1",
     "istanbul": "~0.4.3",
@@ -44,7 +44,7 @@
     "lint": "eslint --config config/.eslintrc src/**/*.js",
     "test": "tape 'tests/**/*.js'",
     "cover": "istanbul cover tape -- 'tests/**/*.js'",
-    "generate": "yo swaggerize:test --framework express --apiPath './config/swagger.yaml' --handlerPath './src/handlers' --dataPath './src/data' --securityPath './src/auth' --testPath './src/tests'",
+    "generate": "yo swaggerize:test --framework express --apiPath './config/swagger.yaml' --handlerPath './src/handlers' --dataPath './src/data' --securityPath './src/auth' --testPath './tests'",
     "//": " ####### Following scripts not meant to be called directly ########",
     "lambda:create": "claudia create --handler lambda.init --deploy-proxy-api --region us-east-1",
     "lambda:update": "claudia update",

@@ -1,3 +1,4 @@
+'use strict';
 /**
  * This is used to build application environment during CI
  */

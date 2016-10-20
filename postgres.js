@@ -2,7 +2,7 @@ const getFile   = require('./src/util/fs').getFile;
 const _         = require('lodash');
 const Sequelize = require('sequelize');
 
-const MODEL_PATH = 'models/**/*.js';
+const MODEL_PATH = 'src/models/**/*.js';
 
 const env = process.env;
 

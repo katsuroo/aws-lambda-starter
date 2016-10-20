@@ -9,6 +9,8 @@ Boilerplate for building AWS lambda microservices.
 
 The project is structured in a way that it can be ran as either lambda services or as a standalone node express app.
 
+Uses swagger to generate function handlers and tests based on api spec.
+
 
 ## Getting started:
 
@@ -18,6 +20,8 @@ Create an .env file in the root of the folder containing the following variables
 DB_USER=xxxxxxxxxxx
 DB_PASSWORD=xxxxxxxxxxx
 DB_NAME=xxxxxxxxxxx
+AWS_ACCESS_KEY_ID=xxxxxxxxxxx
+AWS_SECRET_ACCESS_KEY=xxxxxxxxx
 
 // Only used for local development
 SERVER_HOST=localhost
@@ -41,25 +45,22 @@ npm run [script]
 ~~~
 
 __start:dev__:  
-Starts the application on node express environment with nodemon for change watching
+Starts the application on node express environment with nodemon for change watching.
 
 __test__:  
-Runs all test files that matches the test file paths
+Runs all test files that matches the test file paths.
 
 __lint__:  
-Runs eslint on all javascript files in the src folder
+Runs eslint on all javascript files in the src folder.
+
+__generate__:
+Generates handlers and tests based on swagger yaml file.
 
 __deploy__:  
-Deploys the application to aws lambda
+Deploys the application to aws lambda.
 
 __set-version__:
-Sets the alias for the latest deployed lambda function. The script takes in one argument of the following arguments : prod , dev, stage
-
-__create:handler__:  
-Generates a new handler and binds it to a route
-
-__create:model__:  
-Creates a new model
+Sets the alias for the latest deployed lambda function.
 
 __build:env__:  
 Builds a .env file in the root of the folder. This is used for CircleCI builds.
@@ -67,10 +68,11 @@ Builds a .env file in the root of the folder. This is used for CircleCI builds.
 
 ## File Structure:
 
-__Models__: src/models/*.js
+__Models__: src/models/\*\*/*.js
 
 __Handlers__: src/handlers/\*\*/*.js
 
-__Test__: src/handlers/\*\*/*.test.js
+__Test__: src/tests/\*\*/*.test.js
 
-Model and route files matching these pattern are automatically initialized on server start.
+Model files matching the file pattern are automatically initialized on server start.
+Handlers are automatically routed by the swaggerize middleware.

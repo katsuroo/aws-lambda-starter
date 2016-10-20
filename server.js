@@ -14,5 +14,10 @@ const serverInfo = `Server started
 postgres
   .init()
   .then(() => console.log(chalk.green('Postgres connected')))
-  .then(() => express.listen(port, () => console.log(chalk.green(serverInfo))))
+  .then(() => {
+    express.listen(port, () => {
+      express.swagger.api.host = os.hostname() + ':' + port;
+      console.log(chalk.green(serverInfo));
+    });
+  })
   .catch(err => console.log(err));

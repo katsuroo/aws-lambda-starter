@@ -1,7 +1,7 @@
 {
   "name": "AWS-Lambda-Starter",
   "version": "0.0.1",
-  "author": "katsuroo",
+  "author": "john wu",
   "license": "MIT",
   "main": "server.js",
   "description": "AWS Lambda microservices starter for Node.js",
@@ -15,7 +15,9 @@
     "glob": "^7.1.1",
     "lodash": "^4.16.4",
     "pg": "^6.1.0",
-    "sequelize": "^3.24.3"
+    "sequelize": "^3.24.3",
+    "swaggerize-express": "^4.0.0",
+    "swagmock": "~0.0.2"
   },
   "devDependencies": {
     "chai": "^3.5.0",
@@ -23,26 +25,29 @@
     "eslint": "^3.8.0",
     "eslint-config-airbnb-base": "^8.0.0",
     "eslint-plugin-import": "^2.0.1",
+    "generator-swaggerize": "^3.0.0",
     "inquirer": "^1.2.2",
-    "mocha": "^3.1.2",
-    "nodemon": "^1.11.0"
+    "is-my-json-valid": "^2.13.1",
+    "istanbul": "~0.4.3",
+    "js-yaml": "^3.2.6",
+    "nodemon": "^1.11.0",
+    "supertest": "^1.2.0",
+    "swagger-parser": "^3.4.1",
+    "tape": "^4",
+    "yo": "^1.8.5"
   },
   "scripts": {
     "start:dev": "nodemon --config ./config/nodemon.json server.js",
-    "create:handler": "node ./scripts/create.handler",
-    "create:model": "node ./scripts/create.model",
     "build:env": "node ./scripts/build.environment",
-    "test": "mocha --reporter spec ./src/handlers/**/*.js",
-    "lint": "eslint --config config/.eslintrc src/**/*.js",
     "deploy": "npm run test && npm run lint && node ./scripts/deploy",
     "set-version": "node ./scripts/set.version",
-
+    "lint": "eslint --config config/.eslintrc src/**/*.js",
+    "test": "tape 'tests/**/*.js'",
+    "cover": "istanbul cover tape -- 'tests/**/*.js'",
+    "generate": "yo swaggerize:test --framework express --apiPath './config/swagger.yaml' --handlerPath './src/handlers' --dataPath './src/data' --securityPath './src/auth' --testPath './src/tests'",
     "//": " ####### Following scripts not meant to be called directly ########",
-
     "lambda:create": "claudia create --handler lambda.init --deploy-proxy-api --region us-east-1",
     "lambda:update": "claudia update",
-    "lambda:setProd": "claudia set-version --version prod",
-    "lambda:setDev": "claudia set-version --version dev",
-    "lambda:setStage": "claudia set-version --version stage"
+    "lambda:setVersion": "claudia set-version --version "
   }
 }

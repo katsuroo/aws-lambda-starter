@@ -1,8 +1,8 @@
-const helper    = require('./src/util/helper');
+const getFile   = require('./src/util/fs').getFile;
 const _         = require('lodash');
 const Sequelize = require('sequelize');
 
-const MODEL_PATH = 'src/models/**/*.js';
+const MODEL_PATH = 'models/**/*.js';
 
 const env = process.env;
 
@@ -20,7 +20,7 @@ function initModel(files) {
 
 function init() {
   return postgres.authenticate()
-                 .then(() => helper.getFile(MODEL_PATH))
+                 .then(() => getFile(MODEL_PATH))
                  .then(initModel)
                  .then(() => postgres.sync())
                  .catch(err => console.log(err));

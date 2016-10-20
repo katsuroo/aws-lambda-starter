@@ -19,4 +19,4 @@ const settings = EXTRACTION_LIST.reduce(
   ''
 );
 
-if(!_.isEmpty(settings)) fs.writeFile('../.envsad', settings, 'utf8');
+if(!_.isEmpty(settings)) fs.writeFile('../.env', settings, 'utf8');

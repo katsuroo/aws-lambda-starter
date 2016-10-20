@@ -1,25 +1,19 @@
-const routes           = require('./src/handlers/routes');
 const app              = require('express')();
 const _                = require('lodash');
-const lambdaMiddleware = require('aws-serverless-express/middleware');
+const path             = require('path');
 const bodyParser       = require('body-parser');
+const Swaggerize       = require('swaggerize-express');
+const lambdaMiddleware = require('aws-serverless-express/middleware');
 
-function initializeRoutes() {
-  _.each(routes, (config, path) => {
-    
-    const method  = config.method.toLowerCase();
-    const handler = require(`./src/handlers/${config.handler}`);
-    
-    app[method](path, handler);
-  });
-}
-
-initializeRoutes();
+app.use(lambdaMiddleware.eventContext());
 
 app.use(bodyParser.json());
 
 app.use(bodyParser.urlencoded({extended: true}));
 
-app.use(lambdaMiddleware.eventContext());
+app.use(Swaggerize({
+  api     : path.resolve('./config/swagger.yaml'),
+  handlers: path.resolve('./src/handlers')
+}));
 
 module.exports = app;

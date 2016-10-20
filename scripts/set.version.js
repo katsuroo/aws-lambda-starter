@@ -12,22 +12,5 @@ fs.access('claudia.json', fs.F_OK, err => {
   
   if (err) return console.error('Error: Claudia configuration does not exist');
   
-  switch(version){
-
-    case 'prod':
-      shell.exec('npm run lambda:setProd');
-      break;
-
-    case 'dev':
-      shell.exec('npm run lambda:setDev');
-      break;
-
-    case 'stage':
-      shell.exec('npm run lambda:setStage');
-      break;
-
-    default:
-      console.log('Invalid version');
-      break;
-  }
+  shell.exec(`npm run lambda:setversion ${version}`);
 });
